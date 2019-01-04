@@ -6,23 +6,19 @@
     04.03.2018
 */
 
-//  Given  a  number of nodes and edges  between them
-//  construct a forest where the connected components
-//  correspond to disjoint sets.
+//  Given  a number of nodes and edges between them construct a forest  where
+//  the connected components correspond to disjoint sets.
 
 #include <vector>
 
 using namespace std;
 
 /*
-    The node represents an element of the  set  with
-    its value specified as  an  integer in val.  The
-    node contains  a reference to its parent  and  a
-    size which refers to the size of  the  component
-    containing the node. The size is  only  relevant
-    in the context of the root of the component.  It
-    will still be present in any other node, but its
-    value will be ignored.
+    The  node represents an element of the set with its value specified as an
+    integer in val.  The node contains a reference to its parent and  a  size
+    which refers to the size of the component containing the node.  The  size
+    is only relevant in the context of the root of the  component.   It  will
+    still be present in any other node, but its value will be ignored.
 */
 struct node {
     int parent;
@@ -39,10 +35,9 @@ struct node {
 };
 
 /*
-    We construct a graph class which will handle the
-    union of the sets. V corresponds to the  maximum
-    number of elements in the  tree.   The  tree  is
-    represented as an array of nodes, indexed at  0.
+    We construct a graph class which will handle  the  union  of  the   sets.
+    V corresponds to the  maximum number of elements in the tree.   The  tree
+    is represented as an array of nodes, indexed at 0.
 */
 class Graph {
 private:
@@ -68,21 +63,16 @@ Graph::Graph(int v) {
 }
 
 /*
-    find_parent(int u) returns the parent of u which
-    is simply the node that we have chosen to  be  a
-    representative of the set that contains u.  This
-    parent node's parent will have a value equal  to
-    the parent node itself.
+    find_parent(int u) returns the parent of u which is simply the node  that
+    we have chosen to  be  a representative of the set that contains u.  This
+    parent node's parent will have a value equal to the parent node itself.
 
-    The time complexity for this search is O(log(n))
-    which is achieved by the way we union  two sets,
-    where we attach the set with a smaller  size  to
-    the other one. In order to further  improve  the
-    time complexity of the algorithm, we make use of
-    path compression. When finding the parent p of a
-    node v, set the parent of all the other nodes in
-    the path from v to p to be equal to p. This  way
-    we achieve a shorter but wider tree, and  parent
+    The time complexity for this search is O(log(n)) which is achieved by the
+    way we union two sets, where we attach the set with a smaller size to the
+    other  one.  In order to further  improve  the  time  complexity  of  the
+    algorithm,we make use of path compression. When finding the parent p of a
+    node v, set the parent of all the other nodes in the path from v to p  to
+    be equal to p. This  way we achieve a shorter but wider tree, and  parent
     search is found much faster in  amortized  time.
 */
 int Graph::find_parent(int u) {
@@ -92,16 +82,13 @@ int Graph::find_parent(int u) {
 }
 
 /*
-    add_edge(int u, int v) unions the two sets that
-    contain u and v. If u and v are already present
-    in the same set, then  do  nothing.  Otherwise,
-    consider the set with the smaller size and add
-    a reference to its root element to point to the
-    other  root,  while  increasing  the  set  size
-    appropriately.
+    add_edge(int u, int v) unions the two sets that contain u and v. If u and
+    v are already present in the same set,then do nothing. Otherwise,consider
+    the set with the smaller size and add a reference to its root element  to
+    point to the other root, while  increasing  the  set  size appropriately.
 
-    Time complexity is O(1), assuming that searching
-    for the parent is done in constant time.
+    Time complexity is O(1),assuming that searching for the parent is done in
+    constant time.
 */
 void Graph::add_edge(int u, int v) {
     int p1 = find_parent(u);
@@ -120,18 +107,14 @@ void Graph::add_edge(int u, int v) {
 }
 
 /*
-    get_sets()  returns  a vector of vectors which
-    represent the disjoint sets obtained after the
-    union. We attempt to make the  process  faster
-    by avoiding push_backs and allocating all  the
-    required memory beforehand. For  this  purpose
-    we maintain a setNumber  integer  which  keeps
-    count of the final number of sets.  We use two
-    vectors when reading the sets. The  first  one
-    is needed to group the elements into sets, and
-    the second one gets rid of the empty  sets  by
-    iterating through the sets in the first vector
-    and saving only the nonzero sets.
+    get_sets()  returns a vector of vectors which represent the disjoint sets
+    obtained after the union.  We attempt  to  make  the  process  faster  by
+    avoiding push_backs and allocating all  the  required  memory beforehand.
+    For this purpose we maintain a setNumber integer which keeps count of the
+    final number of sets. We use two vectors when reading the sets. The first
+    one is needed to group the elements into sets,and the second one gets rid
+    of the empty  sets  by iterating through the sets in the first vector and
+    saving only the nonzero sets.
 */
 vector<vector<int>> Graph::get_sets() {
     int setNumber = 0; // Set count
